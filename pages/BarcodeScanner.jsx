@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {StatusBar} from 'expo-status-bar';
-// import {} from "expo-barcode-scanner";
-import { Button, View, Text } from "react-native";
-import BarcodeScanner from 'react-native-barcodescanner';
+import {BarCodeScanner} from "expo-barcode-scanner";
+import { Button, View, Text, StyleSheet } from "react-native";
+// import BarcodeScanner from 'react-native-barcodescanner';
 
 
 export default BarScannerComponent = () =>{
@@ -12,7 +12,7 @@ export default BarScannerComponent = () =>{
 
     const askForCameraPermission = ()=>{
         (async ()=>{
-            const {status} = await BarcodeScanner.requestPermissionAsync();
+            const {status} = await BarCodeScanner.requestPermissionAsync();
             setHasPermission(status == 'granted')
         })()
     }
@@ -52,8 +52,9 @@ export default BarScannerComponent = () =>{
     //return view
     return(
         <View style={styles.container}>
-            <Text> Open up App.js to start working on your app!</Text>
-            <StatusBar style="auto"/>
+            <View style={styles.barcodebox}>
+
+            </View>
         </View>
     );
 }
@@ -64,5 +65,15 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         alignItems:'center',
         justifyContent:'center'
+    },
+    barcodebox:{
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 300,
+        width: 300,
+        overflow: 'hidden',
+        borderRadius: 30,
+        backgroundColor: 'tomato'
     }
 });
