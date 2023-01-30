@@ -20,7 +20,7 @@ const AppButton = ({ onPress, title }) => (
 
 const onPressLogin = () => { }
 
-export default function Login() {
+export default function Login({navigation}) {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
         <View style={styles1.root}>
@@ -45,7 +45,7 @@ export default function Login() {
                 </View>
 
                 {<AppButton title='login' onPress={onPressLogin} />}
-                <Text> Dont have an account ?<Text style={styles1.signup}>Sign Up</Text> </Text>
+                <Text> Dont have an account ? <Text style={styles1.signup} onPress={()=>{navigation.navigate("Signup")}}> Sign Up</Text> </Text>
                 <View style={styles1.footer}>
                     <Text>signup using:</Text>
                     <View style={styles1.leslogo}>
