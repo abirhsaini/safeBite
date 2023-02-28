@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React from 'react'
-import { Fontisto } from '@expo/vector-icons'; 
+import React ,{useState}from 'react'
+import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import logo from "../assets/SafeBite-removebg-preview.png"
+import axios from "axios"
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
@@ -16,54 +17,88 @@ const AppButton = ({ onPress, title }) => (
     </TouchableOpacity>
 );
 
-const onPressLogin = () => { }
-
-export default function Signup({navigation}) {
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
-    <View style={styles1.root}>
-        <LinearGradient
-
-            colors={['#FFFFFF', '#F8B82E']}
-            style={{ flex: 1, width: "100%", alignItems: "center" }}
-            locations={[0.66, 0.999999]}
-        >
 
 
 
-            <Image source={logo} style={styles1.logoStyle} resizeMode="contain" />
-            <View style={styles1.inputLogin}>
-                <AntDesign name="user" size={24} color="black" style={{ padding: 20 }} />
-                <TextInput style={styles1.TextInput} placeholder='username' />
+
+export default function Signup({ navigation }) {
+    const [email, setemail] = useState("");
+const [username, setusername] = useState("");
+const [password, setpassword] = useState("");
+const [conpassword, setconpassword] = useState("");
+
+const onPressLogin = () => { 
+    axios.post("http://localhost:5000/login", {email, username,password, conpassword }).then((response)=>{
+        console.log(response)
+    })
+
+}
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles1.root}>
+                <LinearGradient
+
+                    colors={['#FFFFFF', '#F8B82E']}
+                    style={{ flex: 1, width: "100%", alignItems: "center" }}
+                    locations={[0.66, 0.999999]}
+                >
+
+
+
+                    <Image source={logo} style={styles1.logoStyle} resizeMode="contain" />
+                    <View style={styles1.inputLogin}>
+                        <AntDesign name="user"
+                            size={24} color="black"
+                            style={{ padding: 20 }} />
+                        <TextInput style={styles1.TextInput}
+                            placeholder='username'
+                            value={username}
+                            onChange={(e) => { setusername(e.nativeEvent.text) }} />
+                    </View>
+                    <View style={styles1.inputLogin}>
+                        <Fontisto name="email"
+                            size={24}
+                            color="black"
+                            style={{ padding: 20 }} />
+                        <TextInput
+                            value={email}
+                            placeholder='Email'
+                            onChange={(e) => { setemail(e.nativeEvent.text) }} />
+                    </View>
+                    <View style={styles1.inputLogin}>
+                        <Entypo name="lock" size={24} color="black" style={{ padding: 20 }} />
+                        <TextInput
+                            placeholder='password'
+                            value={password}
+                            onChange={(e) => { setpassword(e.nativeEvent.text) }} />
+                    </View>
+                    <View style={styles1.inputLogin}>
+                        <Entypo name="lock" size={24} color="black" style={{ padding: 20 }} />
+                        <TextInput
+                            placeholder='confirm password'
+                            value={conpassword}
+                            onChange={(e) => { setconpassword(e.nativeEvent.text) }} />
+                    </View>
+                    <View style={styles1.footer}>
+                        <Text>signup using:</Text>
+                        <View style={styles1.leslogo}>
+                            <FontAwesome5 name="google"
+                                size={24}
+                                color="black"
+                                style={{ paddingRight: 10 }} />
+                            <FontAwesome name="facebook"
+                                size={24}
+                                color="black" />
+                        </View>
+                    </View>
+                    {<AppButton
+                        title='signup'
+                        onPress={onPressLogin} />}
+
+                </LinearGradient>
             </View>
-            <View style={styles1.inputLogin}>
-            <Fontisto name="email" size={24} color="black" style={{ padding: 20 }} />
-                <TextInput
-                    placeholder='Email' />
-            </View>
-            <View style={styles1.inputLogin}>
-                    <Entypo name="lock" size={24} color="black" style={{ padding: 20 }} />
-                    <TextInput
-                        placeholder='password' />
-                </View>
-                <View style={styles1.inputLogin}>
-                    <Entypo name="lock" size={24} color="black" style={{ padding: 20 }} />
-                    <TextInput
-                        placeholder='confirm password' />
-                </View>
-                <View style={styles1.footer}>
-                <Text>signup using:</Text>
-                <View style={styles1.leslogo}>
-                    <FontAwesome5 name="google" size={24} color="black" style={{paddingRight:10}} />
-                    <FontAwesome name="facebook" size={24} color="black" />
-                </View>
-            </View>
-            {<AppButton title='signup' onPress={onPressLogin} />}
-             
-        </LinearGradient>
-    </View>
-    </TouchableWithoutFeedback>
-  )
+        </TouchableWithoutFeedback>
+    )
 }
 const styles1 = StyleSheet.create({
     logoStyle: {
@@ -76,7 +111,7 @@ const styles1 = StyleSheet.create({
 
     },
     inputLogin: {
-        width:200,
+        width: 200,
         flexDirection: "row",
         alignItems: 'center',
         borderBottomWidth: 1,
@@ -95,19 +130,19 @@ const styles1 = StyleSheet.create({
         backgroundColor: "#855F4D",
 
         padding: 20,
-        
+
         borderRadius: 10
     },
     loginText: {
         color: '#F8B82E',
         fontSize: 20
     },
-    footer:{
-        marginTop:10
+    footer: {
+        marginTop: 10
     },
-    leslogo:{
-        flexDirection:"row",
-        padding:10,
+    leslogo: {
+        flexDirection: "row",
+        padding: 10,
 
     }
 

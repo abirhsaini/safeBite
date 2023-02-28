@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import logo from "../assets/SafeBite-removebg-preview.png"
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -21,6 +21,9 @@ const AppButton = ({ onPress, title }) => (
 const onPressLogin = () => { }
 
 export default function Login({navigation}) {
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+   
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
         <View style={styles1.root}>
@@ -36,12 +39,15 @@ export default function Login({navigation}) {
                 <Image source={logo} style={styles1.logoStyle} resizeMode="contain" />
                 <View style={styles1.inputLogin}>
                     <AntDesign name="user" size={24} color="black" style={{ padding: 20 }} />
-                    <TextInput style={styles1.TextInput} placeholder='Email or user name' />
+                    <TextInput style={styles1.TextInput} value={email} onChange={(e)=>{setemail(e.nativeEvent.text)}} placeholder='Email' />
                 </View>
                 <View style={styles1.inputLogin}>
                     <Entypo name="lock" size={24} color="black" style={{ padding: 20 }} />
                     <TextInput
-                        placeholder='Email or user name' />
+                        placeholder='password' 
+                        value={password} 
+                        onChange={(e)=>{setpassword(e.nativeEvent.text)}}
+                        secureTextEntry={true}/>
                 </View>
 
                 {<AppButton title='login' onPress={onPressLogin} />}
