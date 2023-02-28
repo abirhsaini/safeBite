@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon index.js",
-        "build": "netlify deploy --prod"
+        "build": "react-scripts build"
     },
     "author": "",
     "license": "ISC",
