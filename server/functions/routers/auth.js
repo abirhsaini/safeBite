@@ -32,7 +32,8 @@ router.get("/login", async(req, res) => {
 
     const { email, password } = req.body;
     if (!email || !password) {
-        res.status(500).json({ msg: "Please provide all values" })
+        console.log(email, password)
+        res.status(400).json({ msg: "Please provide all values" })
 
     }
     const user = await User.findOne({ email }).select('+password')

@@ -28,7 +28,7 @@ const [password, setpassword] = useState("");
 const [conpassword, setconpassword] = useState("");
 
 const onPressLogin = () => { 
-    axios.post("http://localhost:5000/login", {email, username,password, conpassword }).then((response)=>{
+    axios.post("https://safebite.onrender.com/signup", {username ,email,password, conpassword }).then((response)=>{
         console.log(response)
     })
 

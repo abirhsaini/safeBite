@@ -6,6 +6,8 @@ import { Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import axios from "axios"
+
 
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
@@ -18,11 +20,23 @@ const AppButton = ({ onPress, title }) => (
 
 
 
-const onPressLogin = () => { }
+
 
 export default function Login({navigation}) {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
+
+    const onPressLogin = () => { 
+        axios.get("https://safebite.onrender.com/login", {email: email, password: password})
+            .then((response)=>{
+                console.log(response)
+            })
+            .catch((err)=>{
+                console.log(err.response.data);
+                console.log(err.response.status);
+                console.log(err.response.headers);
+            })
+    }
    
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
