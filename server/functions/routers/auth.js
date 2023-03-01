@@ -32,7 +32,7 @@ router.get("/login", async(req, res) => {
 
     const { email, password } = req.body;
     if (!email || !password) {
-        console.log(email, password)
+        console.log("hi bye ", email)
         res.status(400).json({ msg: "Please provide all values", email: email, password: password })
 
     }
@@ -47,6 +47,7 @@ router.get("/login", async(req, res) => {
     const isCorrect = await user.comparePassword(password)
     console.log(isCorrect)
     if (!isCorrect) {
+        console.log("hi bye ", email)
         res.status(500).json({ msg: "mot de passe incorrecte" })
     } else {
         res.status(200).json({ user })
