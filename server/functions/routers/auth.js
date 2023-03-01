@@ -47,7 +47,7 @@ router.get("/login", async(req, res) => {
     const isCorrect = await user.comparePassword(password)
     console.log(isCorrect)
     if (!isCorrect) {
-        console.log("hi bye ", email)
+        console.log("ma3ereft", email)
         res.status(500).json({ msg: "mot de passe incorrecte" })
     } else {
         res.status(200).json({ user })
