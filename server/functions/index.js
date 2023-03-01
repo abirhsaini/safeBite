@@ -10,6 +10,7 @@ app.use(bodyparser.json())
 require("./db")
 require("./model/User")
 
+app.use(express.urlencoded({ extended: true  }));
 app.use(routers)
 
 
