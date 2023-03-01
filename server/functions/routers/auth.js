@@ -47,7 +47,7 @@ router.get("/login", async(req, res) => {
     const isCorrect = await user.comparePassword(password)
     console.log(isCorrect)
     if (!isCorrect) {
-        res.status(500).json({ msg: "Please provide all values" })
+        res.status(500).json({ msg: "mot de passe incorrecte" })
     } else {
         res.status(200).json({ user })
     }
