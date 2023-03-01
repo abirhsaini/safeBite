@@ -33,7 +33,7 @@ router.get("/login", async(req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         console.log("hi bye ", email)
-        res.status(400).json({ msg: "Please provide all values", email: email, password: password })
+        return res.status(400).json({ msg: "Please provide all values", email: email, password: password })
 
     }
     const user = await User.findOne({ email }).select('+password')
@@ -48,9 +48,9 @@ router.get("/login", async(req, res) => {
     console.log(isCorrect)
     if (!isCorrect) {
         console.log("ma3ereft", email)
-        res.status(500).json({ msg: "mot de passe incorrecte" })
+        return res.status(500).json({ msg: "mot de passe incorrecte" })
     } else {
-        res.status(200).json({ user })
+        return res.status(200).json({ user })
     }
 
 })
