@@ -7,10 +7,12 @@ const routers = require("./routers/auth")
 app.use(cors())
 
 app.use(bodyparser.json())
+app.use(express.urlencoded({ extended: true  }));
+
 require("./db")
 require("./model/User")
 
-app.use(express.urlencoded({ extended: true  }));
+
 app.use(routers)
 
 
