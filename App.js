@@ -6,13 +6,15 @@ import { Image, StyleSheet, View } from 'react-native'
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BarScannerComponent from './pages/BarcodeScanner'
 import TextRecognitionComponent from './Components/TextRecognition';
+import TextRecognitionScreen from './Components/TextRecognitionScreen';
 
 // const Stack = createNativeStackNavigator();
 export default function App() {
   return (
 
-    <TextRecognitionComponent/>
-    // <BarScannerComponent/>
+    // <TextRecognitionComponent/>
+    // <TextRecognitionScreen/>
+    <BarScannerComponent/>
 //     <NavigationContainer>
 //    <Stack.Navigator>
 //    <Stack.Screen name="Login" component={Login} />
@@ -23,8 +25,6 @@ export default function App() {
       
 
 // </View>
- 
-
 
   );
 }
