@@ -33,12 +33,11 @@ export default function Signup() {
             console.log(response.status)
             if (response.status=201){Alert.alert("Success","your account has  created  succefully")}
             
-        }).catch((response) => {
-            console.log(response.status)
-            console.log(response)
-            if(response.status=422){ Alert.alert("error","this email already have account")}
-           else {if(response.status=401){ Alert.alert("error","please check your password")}
-            if(response.status=404){Alert.alert("error","please fill all ")}}
+        }).catch((error) => {
+            console.log(error.response.status)
+            if(error.response.status===422){ return Alert.alert("error","this email already have account")}
+             if(error.response.status===401){return Alert.alert("error","please check your password")}
+            if(error.response.status===404){return Alert.alert("error","please fill all ")}
             
 
 

@@ -17,9 +17,10 @@ router.post("/signup", async(req, res) => {
     if (password !== conpassword) {
         return res.status(401).send(error = "verify your password")
     }
-    user.hashPassword()
+
     try {
         const user = await User.create({ username, email, password })
+        user.hashPassword()
         await user.save()
         return res.status(201).send(user)
     } catch (error) {
