@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
 
-const JWT_Secret = "geguergjndgdnfgjfnfsdieapa3435334vgedffsgdbds"
+
 const Jwt_LifeTime = "1d"
 
 const userSchema = new mongoose.Schema({

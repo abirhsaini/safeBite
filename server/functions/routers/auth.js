@@ -26,7 +26,7 @@ router.post("/signup", async(req, res) => {
         )
 
         await user.save()
-        return res.status(201).send(user)
+        return res.status(201).send(user.token)
     } catch (error) {
         console.log(error)
         res.status(422).send("une erreur est survenu")
@@ -56,7 +56,7 @@ router.post("/login", async(req, res) => {
         console.log("ma3ereft", email)
         return res.status(403).json({ msg: "mot de passe incorrecte" })
     } else {
-        return res.status(200).json({ user })
+        return res.status(200).json(user.token)
     }
 
 })

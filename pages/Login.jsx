@@ -35,7 +35,7 @@ export default function Login({navigation}) {
     const onPressLogin = () => { 
         axios.post("https://safebite.onrender.com/login", {email,password})
             .then((response)=>{
-                console.log(response)
+                console.log(response.data.token)
                 setuserToken(response.data.token);
                 setloading(false);
                 AsyncStorage.setItem('AccessToken', response.data.token);
