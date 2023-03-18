@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React ,{useState}from 'react'
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import logo from "../assets/SafeBite-removebg-preview.png"
 import axios from "axios"
+import Dialog from "react-native-dialog";
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
@@ -21,18 +22,32 @@ const AppButton = ({ onPress, title }) => (
 
 
 
-export default function Signup({ navigation }) {
+export default function Signup() {
     const [email, setemail] = useState("");
-const [username, setusername] = useState("");
-const [password, setpassword] = useState("");
-const [conpassword, setconpassword] = useState("");
+    const [username, setusername] = useState("");
+    const [password, setpassword] = useState("");
+    const [conpassword, setconpassword] = useState("");
 
-const onPressLogin = () => { 
-    axios.post("https://safebite.onrender.com/signup", {username ,email,password, conpassword }).then((response)=>{
-        console.log(response)
-    })
+    const onPressLogin = () => {
+        axios.post("https://safebite.onrender.com/signup", { username, email, password, conpassword }).then((response) => {
+            console.log(response.status)
+            if (response.status=201){Alert.alert("Success","your account has  created  succefully")}
+            
+        }).catch((response) => {
+            console.log(response.status)
+            console.log(response)
+            if(response.status=422){ Alert.alert("error","this email already have account")}
+           else {if(response.status=401){ Alert.alert("error","please check your password")}
+            if(response.status=404){Alert.alert("error","please fill all ")}}
+            
 
-}
+
+
+        
+            
+        })
+
+    }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles1.root}>

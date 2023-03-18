@@ -27,14 +27,16 @@ export default function Login({navigation}) {
     const [password, setpassword] = useState("");
 
     const onPressLogin = () => { 
-        axios.get("https://safebite.onrender.com/login", {email: email, password: password})
+        axios.post("https://safebite.onrender.com/login", {email,password})
             .then((response)=>{
                 console.log(response)
+               
             })
             .catch((err)=>{
                 console.log(err.response.data);
                 console.log(err.response.status);
                 console.log(err.response.headers);
+                console.log(email,password)
             })
     }
    

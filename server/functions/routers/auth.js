@@ -12,13 +12,14 @@ router.post("/signup", async(req, res) => {
     if (!username || !email || !password || !conpassword) {
         return res.status(404).send(error = "please fill all")
     }
-    const user = await User.create({ username, email, password })
+
 
     if (password !== conpassword) {
-        return res.send(error = "verify your password")
+        return res.status(401).send(error = "verify your password")
     }
     user.hashPassword()
     try {
+        const user = await User.create({ username, email, password })
         await user.save()
         return res.status(201).send(user)
     } catch (error) {
