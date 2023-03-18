@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     token: { type: String },
+    allergies: { type: Array }
 }, { collection: "user " })
 
 

@@ -7,6 +7,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from "axios"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../context/authContext';
+import { useContext } from 'react';
+
 
 
 
@@ -23,20 +27,27 @@ const AppButton = ({ onPress, title }) => (
 
 
 export default function Login({navigation}) {
+    const {login} = useContext(AuthContext);
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
+   
 
     const onPressLogin = () => { 
         axios.post("https://safebite.onrender.com/login", {email,password})
             .then((response)=>{
                 console.log(response)
+                setuserToken(response.data.token);
+                setloading(false);
+                AsyncStorage.setItem('AccessToken', response.data.token);
+                navigation.replace("Home")
                
             })
             .catch((err)=>{
-                console.log(err.response.data);
-                console.log(err.response.status);
-                console.log(err.response.headers);
-                console.log(email,password)
+                if(err.response.status===404){ return Alert.alert("error","email incorrect")}
+                if(err.response.status===401){ return Alert.alert("error","please fill all")}
+                if(err.response.status===404){ return Alert.alert("error","mot de passe incorrect")}
+
+
             })
     }
    
@@ -66,7 +77,7 @@ export default function Login({navigation}) {
                         secureTextEntry={true}/>
                 </View>
 
-                {<AppButton title='login' onPress={onPressLogin} />}
+                {<AppButton title='login' onPress={login(email,password)} />}
                 <Text> Dont have an account ? <Text style={styles1.signup} onPress={()=>{navigation.navigate("Signup")}}> Sign Up</Text> </Text>
                 <View style={styles1.footer}>
                     <Text>signup using:</Text>

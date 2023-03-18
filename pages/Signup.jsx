@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import logo from "../assets/SafeBite-removebg-preview.png"
 import axios from "axios"
 import Dialog from "react-native-dialog";
+import { useContext } from 'react';
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
