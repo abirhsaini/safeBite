@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Home from './pages/Home';
 import Login from './pages/Login';
 import React from 'react';
@@ -7,10 +8,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BarScannerComponent from './pages/BarcodeScanner'
 import TextRecognitionComponent from './Components/TextRecognition';
 import TextRecognitionScreen from './Components/TextRecognitionScreen';
+=======
+import React from "react";
+import { StyleSheet,  TouchableWithoutFeedback, View, Keyboard } from 'react-native';
+import AddAlergy from './component/addAlergy';
+import NavBar from './component/nav';
+import SideBar from './component/sideBar';
+import LogoSafeBite from './component/logo';
+>>>>>>> origin/fatimaVersion
 
 // const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+<<<<<<< HEAD
   <NavigationContainer>
    <Stack.Navigator>
    <Stack.Screen name="Login" 
@@ -22,12 +32,30 @@ export default function App() {
  
 
 
+=======
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <View style={styles.container}>
+        <NavBar />
+        <AddAlergy />
+        <LogoSafeBite/>
+        <SideBar />
+
+      </View>
+    </TouchableWithoutFeedback>
+>>>>>>> origin/fatimaVersion
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+<<<<<<< HEAD
     justifyContent: 'center'
+=======
+    flex: 1,
+    backgroundColor: '#FFF8E7',
+>>>>>>> origin/fatimaVersion
   },
   imageBox:{
 
