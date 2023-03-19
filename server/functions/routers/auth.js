@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken")
 const User = require("../model/User")
 const bcrypt = require("bcryptjs")
 const JWT_Secret = "geguergjndgdnfgjfnfsdieapa3435334vgedffsgdbds"
+const ObjectId = mongoose.Types.ObjectId;
+const Allergy = require("../model/Allergy")
 
 router.post("/signup", async(req, res) => {
     const { username, email, password, conpassword } = req.body;
@@ -21,7 +23,7 @@ router.post("/signup", async(req, res) => {
     try {
         const user = await User.create({ username, email, password, allergies: [] })
         user.hashPassword()
-        user.token = jwt.sign({ userId: user._id },
+        user.token = jwt.sign({ userId: user._id, username },
             JWT_Secret, { expiresIn: '24h' }
         )
 
@@ -60,6 +62,24 @@ router.post("/login", async(req, res) => {
     }
 
 })
+router.get('/users/:id/', async(req, res) => {
+    try {
+        const userId = req.params.id.toString();
+        console.log(userId.substr(1))
+        const user = await User.findById(ObjectId(userId.substr(1)))
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const allergyIds = user.allergies;
+        const allergies = await Allergy.find({ _id: { $in: allergyIds } });
+        return res.status(200).json(allergies);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 
 module.exports = router;
