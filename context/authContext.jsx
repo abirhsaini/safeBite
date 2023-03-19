@@ -21,7 +21,7 @@ export const AuthProvider =({children})=>{
     const login =(email,password)=>{ 
         axios.post("https://safebite.onrender.com/login", {email,password})
         .then((response)=>{
-            console.log(response.data)
+            
             setuserToken(response.data);
             setloading(false);
             AsyncStorage.setItem('AccessToken', response.data);
