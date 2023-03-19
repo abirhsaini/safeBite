@@ -1,29 +1,24 @@
-import React from "react";
-import { StyleSheet,  TouchableWithoutFeedback, View, Keyboard } from 'react-native';
-import AddAlergy from './component/addAlergy';
-import NavBar from './component/nav';
-import SideBar from './component/sideBar';
-import LogoSafeBite from './component/logo';
+
+
+import { AuthContext, AuthProvider } from './context/authContext';
+import { View ,ActivityIndicator} from 'react-native';
+import { useContext } from 'react';
+import AppNav from './AppNav';
+
+
+
+
+
 
 export default function App() {
-  return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss();
-    }}>
-      <View style={styles.container}>
-        <NavBar />
-        <AddAlergy />
-        <LogoSafeBite/>
-        <SideBar />
 
-      </View>
-    </TouchableWithoutFeedback>
+  return (
+
+    <AuthProvider>
+   <AppNav/>
+    </AuthProvider>
+
+
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF8E7',
-  },
-});
