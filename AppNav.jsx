@@ -7,18 +7,22 @@ import { AuthContext, AuthProvider } from './context/authContext';
 import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
 
+
 const Stack = createNativeStackNavigator();
 export default function AppNav() {
     const {loading,userToken} = useContext(AuthContext);
     if (loading){
+      return(
       <View> 
         <ActivityIndicator size={'large'} 
         />
       </View>
+      )
     }
-    return (
-      
-      <NavigationContainer>
+    console.log(userToken)
+    if (userToken===null) {
+      return(
+        <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Login"
             component={Login}
@@ -26,11 +30,22 @@ export default function AppNav() {
           <Stack.Screen name="Signup"
             component={Signup}
             options={{headerShown:false}}  />
-          <Stack.Screen name="Home" component={Home} />
+          
+        </Stack.Navigator>
+      </NavigationContainer>
+      )
+    } 
+    else{
+    return (
+      
+      <NavigationContainer>
+        <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
      
   
   
     );
+    }
 }

@@ -32,24 +32,7 @@ export default function Login({navigation}) {
     const [password, setpassword] = useState("");
    
 
-    const onPressLogin = () => { 
-        axios.post("https://safebite.onrender.com/login", {email,password})
-            .then((response)=>{
-                console.log(response.data.token)
-                setuserToken(response.data.token);
-                setloading(false);
-                AsyncStorage.setItem('AccessToken', response.data.token);
-                navigation.replace("Home")
-               
-            })
-            .catch((err)=>{
-                if(err.response.status===404){ return Alert.alert("error","email incorrect")}
-                if(err.response.status===401){ return Alert.alert("error","please fill all")}
-                if(err.response.status===404){ return Alert.alert("error","mot de passe incorrect")}
 
-
-            })
-    }
    
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
@@ -77,7 +60,7 @@ export default function Login({navigation}) {
                         secureTextEntry={true}/>
                 </View>
 
-                {<AppButton title='login' onPress={login(email,password)} />}
+                {<AppButton title='login' onPress={()=>{login(email,password)}} />}
                 <Text> Dont have an account ? <Text style={styles1.signup} onPress={()=>{navigation.navigate("Signup")}}> Sign Up</Text> </Text>
                 <View style={styles1.footer}>
                     <Text>signup using:</Text>
