@@ -83,5 +83,62 @@ router.get('/users/:id/allergies', async(req, res) => {
     }
 });
 
+router.post('/allergies', async(req, res) => {
+    const { name, ingredients } = req.body;
+
+
+    try {
+        // Créer une nouvelle allergie
+        const allergy = new Allergy({ name, ingredients });
+
+        // Enregistrer l'allergie dans la base de données
+        await allergy.save();
+
+        // Retourner la réponse avec l'allergie enregistrée
+        return res.json(allergy);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+
+router.post('/users/:id/allergies', async(req, res) => {
+    const { id } = req.params;
+    const { allergyId } = req.body;
+
+    // Vérifier si l'ID utilisateur est valide
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'ID utilisateur invalide' });
+    }
+
+    // Vérifier si l'ID allergie est valide
+    if (!mongoose.Types.ObjectId.isValid(allergyId)) {
+        return res.status(400).json({ message: 'ID allergie invalide' });
+    }
+
+    try {
+        // Trouver l'utilisateur dans la base de données
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Utilisateur introuvable' });
+        }
+
+        // Ajouter l'allergie à l'utilisateur
+        user.allergies.push(allergyId);
+
+        // Enregistrer les modifications dans la base de données
+        await user.save();
+
+        // Retourner la réponse avec l'utilisateur mis à jour
+        return res.json(user);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+
+module.exports = router;
+
 
 module.exports = router;

@@ -3,6 +3,7 @@ import axios from "axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert} from 'react-native';
 import jwt_decode from "jwt-decode";
+import { async } from 'q';
 
 
 
@@ -16,11 +17,8 @@ export const AuthProvider =({children})=>{
     const [userToken, setuserToken] = useState(null);
     const [userId,setuserId]=useState(null)
     const [username, setusername] = useState(null);
-    const [userAllergies,setuserAllergies]=useState(null)
-    
-    
- 
-   
+    const [userAllergies,setuserAllergies]=useState(null);
+    const [allergiesStatus, setallergiesStatus] = useState([]);
     const login =(email,password)=>{ 
         axios.post("https://safebite.onrender.com/login", {email,password})
         .then((response)=>{
@@ -49,16 +47,21 @@ export const AuthProvider =({children})=>{
 
     const islogged = async()=>{
         try{
-            setloading(false);
+            setloading(true);
             let userToken =await AsyncStorage.getItem("AccessToken") 
             var decoded = jwt_decode(userToken);
             setuserId(decoded.userId);
             setusername(decoded.username)
             console.log(decoded.username)
-            axios.get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
-            .then((response)=>{
-                console.log(response.data);
-                setuserAllergies(response.data)})
+            await axios.get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
+            .then(async(response)=>{
+                
+                await setuserAllergies(response.data)
+                console.log(userAllergies);
+                response.data.map(async(element) => {
+                    await AsyncStorage.setItem(element._id.toString(),"true")
+                });
+            })
             .catch((err)=>{console.log(err)})
             setuserToken(userToken)
             setloading(false)
