@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import { AuthContext, AuthProvider } from './context/authContext';
 import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
+import BarScannerComponent from './pages/BarcodeScanner';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,12 +25,16 @@ export default function AppNav() {
       return(
         <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login"
+          {/* <Stack.Screen name="Login"
             component={Login}
             options={{headerShown:false}}  />
           <Stack.Screen name="Signup"
             component={Signup}
-            options={{headerShown:false}}  />
+            options={{headerShown:false}}  /> */}
+          <Stack.Screen name="BarcodeScan"
+            component={BarScannerComponent}
+            options={{headerShown:false}}
+            />
           
         </Stack.Navigator>
       </NavigationContainer>

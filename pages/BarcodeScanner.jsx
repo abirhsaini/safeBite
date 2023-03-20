@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Button, View, Text, StyleSheet, Image } from "react-native";
+import { AuthContext } from "../context/authContext.jsx";
 import { FlatList } from "react-native-gesture-handler";
+import LogoSafeBite from "../component/logo.js";
 
 
 export default function BarScannerComponent(){
-    //hooks
+    const { userAllergies } = useContext(AuthContext);
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [text, setText] = useState("Not yet scanned!");
@@ -37,8 +39,9 @@ export default function BarScannerComponent(){
                 let allergies = response.products[0].allergens_from_ingredients
 
                 console.log("1",product_name)
-                console.log(allergies)
-                console.log(response.products)
+                console.log("2", typeof(userAllergies))
+                // console.log(allergies)
+                // console.log(response.products)
 
                 if(response.products.length === 0){
                     return setProduct_name("Desole le produit n'existe pas actuellement")
@@ -54,6 +57,10 @@ export default function BarScannerComponent(){
             })
             .catch(error=>console.log(error))
         }
+    })
+
+    useEffect(()=>{
+        
     })
 
     //What happens when we scan the bar code
@@ -86,6 +93,7 @@ export default function BarScannerComponent(){
     //return view
     return(
         <View style={styles.container}>
+            <LogoSafeBite/>
             <View style={styles.barcodebox}>
                 <BarCodeScanner
                 showMarker={true}
@@ -103,6 +111,8 @@ export default function BarScannerComponent(){
             />
             <Text style={styles.product_name}>{product_name}</Text>
             <Text>{product_allergies}</Text>
+            {/* <Text>{userAllergies}</Text> */}
+
             {scanned && <Button title={'scan again?'} onPress={() => setScanned(false)} color='tomato' />}
             
         </View>
