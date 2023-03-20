@@ -5,6 +5,7 @@ import { Alert} from 'react-native';
 import jwt_decode from "jwt-decode";
 
 
+
 const JWT_Secret = "geguergjndgdnfgjfnfsdieapa3435334vgedffsgdbds"
 
 export const AuthContext = createContext();
@@ -14,6 +15,7 @@ export const AuthProvider =({children})=>{
     const [loading, setloading] = useState(false);
     const [userToken, setuserToken] = useState(null);
     const [userId,setuserId]=useState(null)
+    const [userAllergies,setuserAllergies]=useState(null)
     
     
  
@@ -50,9 +52,12 @@ export const AuthProvider =({children})=>{
             let userToken =await AsyncStorage.getItem("AccessToken") 
             var decoded = jwt_decode(userToken);
             setuserId(decoded.userId);
-            axios.get(`https://safebite.onrender.com/users/${userId}/`).then((response)=>{console.log(response)})
-            .catch((err)=>{console.log(err)})
             console.log(userId)
+            axios.get(`https://safebite.onrender.com/users/${decoded.userId}/`)
+            .then((response)=>{
+                console.log(response.data);
+                setuserAllergies(response.data)})
+            .catch((err)=>{console.log(err)})
             setuserToken(userToken)
             setloading(false)
         }
@@ -66,7 +71,7 @@ export const AuthProvider =({children})=>{
         islogged();
     }, []);
     return(
-    <AuthContext.Provider value={{login, logout, loading,userToken,userId}}>
+    <AuthContext.Provider value={{login, logout, loading,userToken,userAllergies}}>
         {children}
     </AuthContext.Provider>
 )}

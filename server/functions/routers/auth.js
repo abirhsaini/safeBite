@@ -62,7 +62,7 @@ router.post("/login", async(req, res) => {
     }
 
 })
-router.get('/users/:id/', async(req, res) => {
+router.get('/users/:id/allergies', async(req, res) => {
     try {
         const userId = req.params.id.toString();
         console.log(userId)

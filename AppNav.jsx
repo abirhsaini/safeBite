@@ -13,7 +13,7 @@ export default function AppNav() {
     const {loading,userToken} = useContext(AuthContext);
     if (loading){
       return(
-      <View> 
+      <View style={{justifyContent:'center',alignItems:"center",flex:1}}> 
         <ActivityIndicator size={'large'} 
         />
       </View>

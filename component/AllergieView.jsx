@@ -1,119 +1,17 @@
 import { View, Text, FlatList,StyleSheet } from 'react-native'
-import React ,{useState} from 'react'
+import React ,{useState, useContext} from 'react'
+import { AuthContext } from '../context/authContext';
 
 export default function AllergieView() {
-    const dataitem = [
-        
-        {
-            "_id": {
-              "$oid": "63fe10136e4172a6b0e2cf03"
-            },
-            "name": "produits laitiers ",
-            "ingredients": [
-              "Babeurre",
-              "Benzoate de calcium",
-              "Beurre",
-              "Beurre concentré",
-              "Calciumstearoylactylaat",
-              "Caséinate",
-              "Caséine",
-              "Cheddar",
-              "Concentré de lactosérum",
-              "Concentré de protéines de lactosérum",
-              "Cottage cheese",
-              "Crème",
-              "Crème chantilly",
-              "Crème fouettée",
-              "Crème fraiche",
-              "E101",
-              "E213",
-              "E234",
-              "E481",
-              "E482",
-              "E966",
-              "Fromage",
-              "Ghee",
-              "Glycomacropeptide",
-              "Grana padano",
-              "Immunoglobuline",
-              "Kéfir",
-              "La glace",
-              "Lactitol",
-              "Lactose",
-              "Lait",
-              "Lait de beurre",
-              "Lait de brebis",
-              "Lait de chèvre",
-              "Lait de vache",
-              "Lait en poudre",
-              "Lait écrémé",
-              "Le lait écrémé en poudre",
-              "Les solides du lait",
-              "Margarine",
-              "Matière grasse",
-              "Matières grasses du lait",
-              "Mozzarella",
-              "Nisine",
-              "Petit lait",
-              "lactosérum",
-              "Poudre de lactosérum",
-              "Poudre de petit lait",
-              "Protéine de lait hydrolysée",
-              "Protéines du lait",
-              "Sucre du lait",
-              "Tagatose",
-              "Yaourt"
-            ]
-          },
-          {
-            "_id": {
-              "$oid": "63fe3caca9a9b3e923e4c360"
-            },
-            "name": "oeuf de poulet",
-            "ingredients": [
-              "Albumine",
-              "Avidine",
-              "Blanc d'oeuf",
-              "Blanc d'oeuf de poulet",
-              "Conalbumine",
-              "Des oeufs",
-              "E1105",
-              "E322",
-              "Gamme jaune d'oeuf de poule",
-              "Globuline",
-              "Jaune d'oeuf",
-              "Lecithine",
-              "Lipovitellin",
-              "Livetine",
-              "Lysozyme",
-              "L'écithine d'oeuf",
-              "Mayonnaise",
-              "Oeuf",
-              "oeuf de poules élevées en plein air",
-              "Ovalbumine",
-              "Ovo albumine",
-              "Ovoglobuline",
-              "Ovomucine",
-              "Ovomucoïde",
-              "Ovosucrol",
-              "Ovotranfarine ",
-              "Phosphatidylsérine",
-              "Phospholipides ",
-              "Phosvitine",
-              "Poudre d'oeuf",
-              "Poudre de protéine",
-              "Protéine doeuf de poulet",
-              "Oeuf d'animaux élevés en plein air"
-            ]
-          }
-    ]
-    const [data, setdata] = useState(dataitem);
+  const {userAllergies} = useContext(AuthContext);
+    
+    const [data, setdata] = useState(userAllergies);
     return (
         <View style={{flex: 1, height: "100%"}}>
             <FlatList
                 style={styles.notificationList}
-                data={data}
-                keyExtractor={ item => item._id.$oid}
+                data={userAllergies}
+                keyExtractor={ item => item._id}
                 renderItem={({item})=>{
                     return (
                         <Text style={styles.name}>{item.name}</Text>
