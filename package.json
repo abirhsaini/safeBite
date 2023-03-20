@@ -23,6 +23,7 @@
     "expo-image-manipulator": "~11.0.0",
     "expo-image-picker": "~14.0.2",
     "expo-status-bar": "~1.4.2",
+    "mongodb": "^5.1.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",

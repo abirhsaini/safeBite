@@ -86,6 +86,7 @@ export default function BarScannerComponent(){
     //return view
     return(
         <View style={styles.container}>
+            <LogBox.js/>
             <View style={styles.barcodebox}>
                 <BarCodeScanner
                 showMarker={true}
