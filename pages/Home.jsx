@@ -11,7 +11,7 @@ import AllergieView from '../component/AllergieView';
 
 
 export default function Home() {
-  const { logout } = useContext(AuthContext);
+  const { logout,username } = useContext(AuthContext);
 
 
 
@@ -20,8 +20,8 @@ export default function Home() {
     <View style={styles.container}>
       <NavBar />
       <View style={styles.content1}>
-        <UserAvatar style={{ marginRight: 30 }} size={50} name="John Doe" bgColors={['#ccc', '#fafafa', '#ccaabb']} />
-        <Text style={{ marginLeft: 30, }}> oumaima ouahline </Text>
+        <UserAvatar style={{ marginRight: 30 }} size={50} name={username} bgColors={['#ffff', '#B77979', '#ccaabb']} />
+        <Text style={{ marginLeft: 30, }}> {username} </Text>
         <Button title="Logout" onPress={() => logout()} />
       </View>
       <View style={styles.content2}>

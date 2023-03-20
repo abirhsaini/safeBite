@@ -23,9 +23,10 @@ router.post("/signup", async(req, res) => {
     try {
         const user = await User.create({ username, email, password, allergies: [] })
         user.hashPassword()
-        user.token = jwt.sign({ userId: user._id, username },
+        user.token = jwt.sign({ userId: user._id, username: user.username },
             JWT_Secret, { expiresIn: '24h' }
         )
+
 
         await user.save()
         return res.status(201).send(user.token)
@@ -58,6 +59,7 @@ router.post("/login", async(req, res) => {
         console.log("ma3ereft", email)
         return res.status(403).json({ msg: "mot de passe incorrecte" })
     } else {
+        console.log(jwt.decode(user.token).username)
         return res.status(200).json(user.token)
     }
 
