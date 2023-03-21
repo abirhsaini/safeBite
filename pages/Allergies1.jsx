@@ -6,10 +6,12 @@ import SideBar from '../component/sideBar';
 import AllergieView from '../component/AllergieView';
 import { Icon } from '@rneui/themed';
 import Logo from '../component/logo';
+
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function Allergies1({navigation}) {
     const { width } = Dimensions.get('window');
+   
 
 
     return (
@@ -35,7 +37,7 @@ export default function Allergies1({navigation}) {
                 <Logo />
             </View>
             <View style={styles.sidebar}>
-                <SideBar />
+            <SideBar  navigation={navigation} />
             </View>
         </View>
     );

@@ -44,7 +44,7 @@ export default function Home({ navigation }) {
       </View>
       <View style={styles.sidebar}>
         {/* Sidebar component */}
-        <SideBar />
+        <SideBar  navigation={navigation}/>
       </View>
     </View>
   );

@@ -8,6 +8,7 @@ import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
 import Allergies from './pages/Allergies1';
 import AddAlergy from './component/addAlergy';
+import Settings from './pages/Settings';
 
 
 const Stack = createNativeStackNavigator();
@@ -47,6 +48,8 @@ export default function AppNav() {
         <Stack.Screen name="Allergies" component={Allergies} 
         options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
         <Stack.Screen name="Addallergie" component={AddAlergy} 
+        options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
+        <Stack.Screen name="Settings" component={Settings} 
         options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
         </Stack.Navigator>
         

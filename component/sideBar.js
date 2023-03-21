@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 import { Foundation } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
 
-const SideBar =()=>{
+const SideBar =({ navigation })=>{
     return(
         <View style={styles.sideBar}>
-            <View style={styles.item}>
+            <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate("Home")}}>
                 <Foundation name="home" size={45} color="white" />
                 <Text style={styles.content}>Home</Text>
-            </View>
-            <View style={styles.item}> 
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}> 
                 <MaterialIcons name="history" size={50} color="white" />
                 <Text  style={styles.content}>History</Text>
-            </View>
+            </TouchableOpacity>
         
-            <View style={styles.item}>
+            <TouchableOpacity style={styles.item}>
                 <MaterialIcons name="qr-code-scanner" size={45} color="white" />
                 <Text style={styles.content}>Scan</Text>
-            </View>
+            </TouchableOpacity>
             
-            <View style={styles.item}>
+            <TouchableOpacity  onPress={()=>{navigation.navigate("Settings")}} style={styles.item}>
             <Ionicons name="settings-sharp" size={45} color="white" />
                 <Text style={styles.content}>Settings</Text>
-            </View>
+            </TouchableOpacity>
             
         </View>
     )
