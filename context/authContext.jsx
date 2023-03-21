@@ -62,12 +62,12 @@ export const AuthProvider =({children})=>{
                     await AsyncStorage.setItem(element._id.toString(),"true")
                 });
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{console.log("auth1",err)})
             setuserToken(userToken)
             setloading(false)
         }
         catch(err){
-            console.log(err)
+            console.log("auth2",err)
 
         }
         

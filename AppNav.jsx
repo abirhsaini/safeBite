@@ -40,10 +40,10 @@ export default function AppNav() {
       
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen name="BarcodeScan"
+        {/* <Stack.Screen name="BarcodeScan"
             component={BarScannerComponent}
             options={{headerShown:false}}
-            />
+            /> */}
         <Stack.Screen name="Home" component={Home} 
         options={{headerShown:false}}/>
         <Stack.Screen name="Allergies" component={Allergies} 

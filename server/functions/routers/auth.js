@@ -31,7 +31,7 @@ router.post("/signup", async(req, res) => {
         await user.save()
         return res.status(201).send(user.token)
     } catch (error) {
-        console.log(error)
+        console.log("err1",error)
         res.status(422).send("une erreur est survenu")
 
     }
@@ -46,20 +46,20 @@ router.post("/login", async(req, res) => {
 
     }
     const user = await User.findOne({ email }).select('+password')
-    console.log(user)
+    console.log("user", user)
     if (!user) {
         return res.status(404).json({ msg: "invalid credentials" })
     }
 
-    console.log(password)
-    console.log(user)
+    console.log("password", password)
+    console.log("user2",user)
     const isCorrect = await user.comparePassword(password)
-    console.log(isCorrect)
+    console.log("iscorr",isCorrect)
     if (!isCorrect) {
         console.log("ma3ereft", email)
         return res.status(403).json({ msg: "mot de passe incorrecte" })
     } else {
-        console.log(jwt.decode(user.token).username)
+        console.log("jwt-decode",jwt.decode(user.token).username)
         return res.status(200).json(user.token)
     }
 
@@ -67,7 +67,7 @@ router.post("/login", async(req, res) => {
 router.get('/users/:id/allergies', async(req, res) => {
     try {
         const userId = req.params.id.toString();
-        console.log(userId)
+        console.log("userId",userId)
         const user = await User.findById(ObjectId(userId))
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -141,4 +141,4 @@ router.post('/users/:id/allergies', async(req, res) => {
 module.exports = router;
 
 
-module.exports = router;
+// module.exports = router;

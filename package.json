@@ -19,6 +19,7 @@
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",
     "jwt-decode": "^3.1.2",
+    "ms": "^2.1.3",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
@@ -26,9 +27,11 @@
     "react-native-gesture-handler": "^2.8.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "~3.18.0",
+    "react-native-user-avatar": "^1.0.8",
     "react-native-web": "~0.18.9",
     "react-navigation": "^4.4.4",
     "react-scripts": "^5.0.1",
+    "safe-buffer": "^5.2.1",
     "shebang-regex": "^4.0.0"
   },
   "devDependencies": {
