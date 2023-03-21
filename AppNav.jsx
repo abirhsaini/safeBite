@@ -3,6 +3,10 @@ import Login from './pages/Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Signup from './pages/Signup';
+import BarScannerComponent from './pages/BarcodeScanner';
+import Allergies1 from './pages/Allergies1';
+import AddAllergy from './component/addAlergy';
+import TextRecognitionOcr from './pages/IngredScan';
 import { AuthContext, AuthProvider } from './context/authContext';
 import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
@@ -40,15 +44,15 @@ export default function AppNav() {
       
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen name="BarcodeScan"
-            component={BarScannerComponent}
-            options={{headerShown:false}}
-            /> */}
         <Stack.Screen name="Home" component={Home} 
         options={{headerShown:false}}/>
-        <Stack.Screen name="Allergies" component={Allergies} 
+        <Stack.Screen name="BarcodeScan" component={BarScannerComponent}
+        options={{headerShown:false}}/>
+        <Stack.Screen name="IngredScan" component={TextRecognitionOcr}
+        options={{headerShown:false}}/>
+        <Stack.Screen name="Allergies" component={Allergies1} 
         options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
-        <Stack.Screen name="Addallergie" component={AddAlergy} 
+        <Stack.Screen name="Addallergie" component={AddAllergy} 
         options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
         </Stack.Navigator>
         

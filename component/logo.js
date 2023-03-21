@@ -16,6 +16,7 @@ export default LogoSafeBite;
 
 const styles =StyleSheet.create({
     image: {
+        top:0,
         alignItems: "center",
         marginTop: 140
     }

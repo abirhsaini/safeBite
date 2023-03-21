@@ -17,9 +17,12 @@ const styles = StyleSheet.create({
     nav: {
         backgroundColor: "rgba(255, 189, 89, 0.73)",
         height: 60,
+        width: "100%",
         flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'center',
+        // position:"absolute",
+        // top: 31
 
     }, 
     content: {

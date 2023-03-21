@@ -4,7 +4,8 @@ import { View, Text, Button, StyleSheet, StatusBar, Switch, Image, Dimensions } 
 import NavBar from '../component/nav';
 import SideBar from '../component/sideBar';
 import AllergieView from '../component/AllergieView';
-import { Icon } from '@rneui/themed';
+// import { Icon } from '@rneui/themed';
+
 import Logo from '../component/logo';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
@@ -17,10 +18,10 @@ export default function Allergies1({navigation}) {
             <TouchableWithoutFeedback >
                 <View style={styles.button}>
 
-                    <Icon
+                    {/* <Icon
                         name='add-circle'
                         color='rgba(242, 157, 56, 1)'
-                    />
+                    /> */}
                     <Text onPress={()=>navigation.navigate("Addallergie")} style={{ color: "rgba(242, 157, 56, 1)", }}> CREATE NEW ALLERGY</Text>
                 </View>
             </TouchableWithoutFeedback>

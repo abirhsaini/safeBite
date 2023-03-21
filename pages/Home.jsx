@@ -31,15 +31,19 @@ export default function Home({ navigation }) {
           style={{ textAlign: 'right', color: '#654C4F', marginRight: 10 }}
           onPress={() => navigation.navigate('Allergies')}
         >
-          See all allergies
+          See all allergies {">>"}
         </Text>
       </View>
       <View style={styles.deuxbouttons}>
         <View>
-          <Text style={styles.button}>Scan code</Text>
+          <Text style={styles.button}
+            onPress={()=>navigation.navigate('BarcodeScan')}
+          >Scan code</Text>
         </View>
         <View>
-          <Text style={styles.button}>Scan ingredients</Text>
+          <Text style={styles.button}
+            onPress={()=>navigation.navigate('IngredScan')}
+          >Scan ingredients</Text>
         </View>
       </View>
       <View style={styles.sidebar}>

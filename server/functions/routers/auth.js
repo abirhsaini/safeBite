@@ -74,7 +74,9 @@ router.get('/users/:id/allergies', async(req, res) => {
         }
         const allergyIds = user.allergies;
         const allergies = await Allergy.find({ _id: { $in: allergyIds } });
+        console.log("les allergies",res.json(allergies))
         return res.status(200).json(allergies);
+        
 
 
     } catch (err) {

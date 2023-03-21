@@ -45,33 +45,67 @@ export const AuthProvider =({children})=>{
         setloading(false);
     }
 
-    const islogged = async()=>{
-        try{
-            setloading(true);
-            let userToken =await AsyncStorage.getItem("AccessToken") 
+    const islogged = async () => {
+        try {
+          setloading(true);
+          let userToken = await AsyncStorage.getItem("AccessToken");
+          if (userToken) {
             var decoded = jwt_decode(userToken);
             await setuserId(decoded.userId);
-            setusername(decoded.username)
-            console.log("hi")
-            await axios.get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
-            .then(async(response)=>{
-                
-                await setuserAllergies(response.data)
-                console.log(userAllergies);
-                response.data.map(async(element) => {
-                    await AsyncStorage.setItem(element._id.toString(),"true")
+            setusername(decoded.username);
+            console.log("islogged logged");
+            await axios
+              .get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
+              .then(async (response) => {
+                await setuserAllergies(response.data);
+                console.log("context userAllerg",userAllergies);
+                response.data.map(async (element) => {
+                  await AsyncStorage.setItem(element._id.toString(), "true");
                 });
-            })
-            .catch((err)=>{console.log("auth1",err)})
-            setuserToken(userToken)
-            setloading(false)
+              })
+              .catch((err) => {
+                console.log("auth1", err);
+              });
+            setuserToken(userToken);
+          } else {
+            console.log("userToken is null or undefined");
+          }
+        } catch (err) {
+          console.log("auth2", err);
+        } finally {
+          setloading(false);
         }
-        catch(err){
-            console.log("auth2",err)
+      };
+      
 
-        }
+
+    // const islogged = async()=>{
+    //     try{
+    //         setloading(true);
+    //         let userToken =await AsyncStorage.getItem("AccessToken") 
+    //         var decoded = jwt_decode(userToken);
+    //         await setuserId(decoded.userId);
+    //         setusername(decoded.username)
+    //         console.log("hi")
+    //         await axios.get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
+    //         .then(async(response)=>{
+                
+    //             await setuserAllergies(response.data)
+    //             console.log(userAllergies);
+    //             response.data.map(async(element) => {
+    //                 await AsyncStorage.setItem(element._id.toString(),"true")
+    //             });
+    //         })
+    //         .catch((err)=>{console.log("auth1",err)})
+    //         setuserToken(userToken)
+    //         setloading(false)
+    //     }
+    //     catch(err){
+    //         console.log("auth2",err)
+
+    //     }
         
-    }
+    // }
     useEffect(() => {
         islogged();
     }, []);
