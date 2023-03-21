@@ -100,7 +100,7 @@ export default function TextRecognitionOcr () {
 
             for (let i = 0; i < smallerArray.length; i++) {
               if (largerArray.includes(smallerArray[i])) {
-                console.log(`"${productIngred[i]}" is a common ingredient`);
+                console.log(`index ${i} "${productIngred[i]}" is a common ingredient`);
                 commonIngredients.push(productIngred[i]);
                 setAllergy(userAllergies[j])
                 isDanger = true
