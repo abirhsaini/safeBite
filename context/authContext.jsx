@@ -50,9 +50,9 @@ export const AuthProvider =({children})=>{
             setloading(true);
             let userToken =await AsyncStorage.getItem("AccessToken") 
             var decoded = jwt_decode(userToken);
-            setuserId(decoded.userId);
+            await setuserId(decoded.userId);
             setusername(decoded.username)
-            console.log(decoded.username)
+            console.log("hi")
             await axios.get(`https://safebite.onrender.com/users/${decoded.userId}/allergies`)
             .then(async(response)=>{
                 
@@ -76,7 +76,7 @@ export const AuthProvider =({children})=>{
         islogged();
     }, []);
     return(
-    <AuthContext.Provider value={{login, logout, loading,userToken,userAllergies,username}}>
+    <AuthContext.Provider value={{login, logout, loading,userToken,userAllergies,username,userId,islogged}}>
         {children}
     </AuthContext.Provider> 
 )}
