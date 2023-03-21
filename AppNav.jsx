@@ -6,7 +6,6 @@ import Signup from './pages/Signup';
 import { AuthContext, AuthProvider } from './context/authContext';
 import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
-import BarScannerComponent from './pages/BarcodeScanner';
 
 
 const Stack = createNativeStackNavigator();
@@ -14,8 +13,8 @@ export default function AppNav() {
     const {loading,userToken} = useContext(AuthContext);
     if (loading){
       return(
-      <View> 
-        <ActivityIndicator size={'large'} 
+      <View style={{justifyContent:'center',alignItems:"center",flex:1}}> 
+        <ActivityIndicator size={'large'} color="rgba(242, 157, 56, 1)"
         />
       </View>
       )
@@ -25,16 +24,12 @@ export default function AppNav() {
       return(
         <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen name="Login"
+          <Stack.Screen name="Login"
             component={Login}
             options={{headerShown:false}}  />
           <Stack.Screen name="Signup"
             component={Signup}
-            options={{headerShown:false}}  /> */}
-          <Stack.Screen name="BarcodeScan"
-            component={BarScannerComponent}
-            options={{headerShown:false}}
-            />
+            options={{headerShown:false}}  />
           
         </Stack.Navigator>
       </NavigationContainer>
@@ -45,8 +40,19 @@ export default function AppNav() {
       
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="BarcodeScan"
+            component={BarScannerComponent}
+            options={{headerShown:false}}
+            />
+        <Stack.Screen name="Home" component={Home} 
+        options={{headerShown:false}}/>
+        <Stack.Screen name="Allergies" component={Allergies} 
+        options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
+        <Stack.Screen name="Addallergie" component={AddAlergy} 
+        options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
         </Stack.Navigator>
+        
+
       </NavigationContainer>
      
   
