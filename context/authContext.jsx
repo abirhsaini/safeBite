@@ -47,7 +47,7 @@ export const AuthProvider =({children})=>{
 
     const islogged = async()=>{
         try{
-            setloading(true);
+            setloading(false);
             let userToken =await AsyncStorage.getItem("AccessToken") 
             var decoded = jwt_decode(userToken);
             await setuserId(decoded.userId);

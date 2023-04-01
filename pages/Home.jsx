@@ -7,7 +7,8 @@ import SideBar from '../component/sideBar';
 import AllergieView from '../component/AllergieView';
 
 export default function Home({ navigation }) {
-  const { logout, username } = useContext(AuthContext);
+  const {  username } = useContext(AuthContext);
+  
 
   return (
     <View style={styles.container}>
@@ -16,11 +17,11 @@ export default function Home({ navigation }) {
         <UserAvatar
           style={{ marginRight: 30 }}
           size={50}
-          name={username}
+          name="abir"
           bgColors={['#ffff', '#B77979', '#ccaabb']}
         />
         <Text style={{ marginLeft: 30 }}> {username} </Text>
-        <Button title="Logout" onPress={() => logout()} />
+       
       </View>
       <View style={styles.content2}>
         <Text style={{ marginLeft: 30, fontSize: 30 }}>My allergies</Text>
