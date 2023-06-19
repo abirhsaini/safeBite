@@ -6,14 +6,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AllergieView(props) {
   console.log(props.page)
 
-  const { userAllergies } = useContext(AuthContext);
+  const { userAllergies, loading,setloading } = useContext(AuthContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const [data, setdata] = useState(userAllergies);
+  
 
   useEffect(() => {
+    
     const getData = async () => {
       const values = await AsyncStorage.multiGet(userAllergies.map((item) => item._id));
-      
+      console.log("data ",userAllergies)
       const newData = userAllergies.map((item, index) => {
         const value = values[index][1];
         console.log(value)
@@ -21,6 +23,7 @@ export default function AllergieView(props) {
         return item;
       });
       setdata(newData);
+      setloading(false)
     };
     getData();
   }, [userAllergies]);

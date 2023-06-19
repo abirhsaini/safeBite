@@ -60,7 +60,7 @@ router.post("/login", async(req, res) => {
         return res.status(403).json({ msg: "mot de passe incorrecte" })
     } else {
         console.log("jwt-decode",jwt.decode(user.token).username)
-        return res.status(200).json(user.token)
+        return res.status(200).json("info",user.token)
     }
 
 })

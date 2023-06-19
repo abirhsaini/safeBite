@@ -32,11 +32,11 @@ export default function Allergies1({navigation}) {
 
                 </View>
             </View>
-            <View style={styles.sidebar}>
+            <View style={styles.logo}>
                 <Logo />
             </View>
             <View style={styles.sidebar}>
-                <SideBar />
+                <SideBar navigation={navigation}/>
             </View>
         </View>
     );
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     content2: {
         marginTop: 40,
-        height: 300
+        height: 800
     },
     sidebar: {
         position: 'absolute',
@@ -80,7 +80,9 @@ const styles = StyleSheet.create({
     },
     logo: {
         alignItems: 'center',
-        marginBottom: 50
+        position: 'absolute',
+        bottom: 100,
+        left:"42%"
     }
 
 });

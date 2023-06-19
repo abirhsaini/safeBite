@@ -9,7 +9,7 @@ import NavBar from "../component/nav.js";
 import SideBar from "../component/sideBar.js";
 import { AntDesign } from '@expo/vector-icons';
 
-export default function BarScannerComponent({navigation}){
+export default function BarScannerComponent({ navigation }) {
     const { userAllergies } = useContext(AuthContext);
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -17,184 +17,195 @@ export default function BarScannerComponent({navigation}){
     const [product_name, setProduct_name] = useState("");
     const [product_allergies, setProduct_allergies] = useState("")
     const [product_image, setProduct_image] = useState("C:\Users\bachi\Desktop\safeBite\assets\safebite-icon.png")
-    const [isDanger, set_isDanger] = useState(null);
+    const [isDanger, set_isDanger] = useState(false);
     const [dangerous, setDangerous] = useState("");
     const [commonIngred, setCommonIngred] = useState(null)
     const [allergy, setAllergy] = useState(null)
 
-    const askForCameraPermission = () =>{
-        (async ()=>{
+    const askForCameraPermission = () => {
+        (async () => {
             const { status } = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status == 'granted')
         })()
     }
 
+    const clearData = () => {
+        setScanned(false)
+        // setText(null)
+        // setProduct_name(null)
+        // setProduct_allergies(null)
+        // set_isDanger(null)
+        // setCommonIngred(null)
+        // setAllergy(null)
+
+    }
     //verify if the product contains some allergetic ingredients
     const isAllergetic = () => {
 
-        console.log(userAllergies.length)
-        for(let j=0;j<userAllergies.length;j++){
-            const productIngred = product_allergies ? product_allergies.split(",") : [];
-            productIngred.forEach((item, index, array) => {
-                array[index] = item.toUpperCase();
-              });
-              
-            let allergyIngred = userAllergies && userAllergies[j] ? userAllergies[j]["ingredients"] : [];
+        // console.log("length", userAllergies.length)
+        const productIngred = product_allergies ? product_allergies.split(",") : [];
+
+        // console.log("type of product ingre", productIngred)
+        productIngred.forEach((item, index, array) => {
+            array[index] = item.toUpperCase();
+        });
+
+        var Empty = [];
+
+        for (let j = 0; j < userAllergies.length; j++) {
+
+
+            allergyIngred = userAllergies.reduce((accumulator, current) => {
+                return [...accumulator, ...(current ? current["ingredients"] : [])];
+              }, []);
+
             allergyIngred.forEach((item, index, array) => {
                 array[index] = item.toUpperCase();
-              });
-            console.log(allergyIngred);
-            console.log(productIngred);
-            const commonIngredients = [];
-            let isDanger = false;
-            
-            const smallerArray = allergyIngred.length < productIngred.length ? allergyIngred : productIngred;
-            const largerArray = allergyIngred.length >= productIngred.length ? allergyIngred : productIngred;
+            });
 
-            for (let i = 0; i < smallerArray.length; i++) {
+            // console.log("allergy ingre",allergyIngred);
+            // console.log(productIngred);
+
+        }
+        var commonIngredients = [];
+
+        const smallerArray = allergyIngred.length < productIngred.length ? allergyIngred : productIngred;
+        const largerArray = allergyIngred.length >= productIngred.length ? allergyIngred : productIngred;
+        var danger = false
+
+        console.log("allergypord",allergyIngred)
+        for (let i = 0; i < smallerArray.length; i++) {
+            console.log(i)
+            console.log("element", smallerArray[i])
+            
             if (largerArray.includes(smallerArray[i])) {
-                console.log(`"${productIngred[i]}" is a common ingredient`);
-                commonIngredients.push(productIngred[i]);
-                setAllergy(userAllergies[j])
-                isDanger=true
-            }
-            }
-            set_isDanger(isDanger)
-            console.log(commonIngredients.length)
-            if (commonIngredients.length > 0) {
-            setDangerous(`Product may contains`);
-            setCommonIngred(commonIngredients.join(", "));
-            } else {
-            setDangerous("Safe product! you can consume it :)");
+                // console.log("larger", largerArray)
+                console.log(`"${smallerArray[i]}" is a common ingredient`);
+                commonIngredients.push(smallerArray[i]);
+                //setAllergy(userAllergies[j])
+                danger = true
             }
         }
-            
+        set_isDanger(danger)
+        
+        console.log("common ingredients",commonIngredients)
+        if (commonIngredients.length > 0) {
+            setDangerous(`Product may contains`);
+            setCommonIngred(commonIngredients.join(", "));
+        } else {
+            setDangerous("Safe product! you can consume it :)");
+            setCommonIngred(null)
+        }
 
-
-        // const productIngred = product_allergies ? product_allergies.split(",") : [];
-        // const allergyIngred = userAllergies && userAllergies[1] ? userAllergies[1]["ingredients"] : [];
-        // console.log(allergyIngred);
-        // console.log(productIngred);
-        // let isDangerous = false;
-        // for(let i = 0; i < productIngred.length; i++) {
-        //   if(allergyIngred.includes(productIngred[i])) {
-        //     isDangerous = true;
-        //   }
-        // }
-        // if (isDangerous) {
-        //   set_isDanger("it's dangerous");
-        // } else {
-        //   set_isDanger("it's not dangerous");
-        // }
-
-        // console.log("productIngredients", productIngred)
-        // if (someElementsInCommon) {
-        //     set_isDanger("Attention! il est dangereux d'utiliser ce produit")
-        // } else {
-        //     set_isDanger("Vous pouvez le consommer librement, bon apetit!")
-        // }
     }
     //Request for camera's permission
-    useEffect(()=>{
+    useEffect(() => {
         askForCameraPermission();
-    },[]);
+    }, []);
 
     //fetching data from open food facts api 
-    useEffect(()=>{
-        if(scanned===true){
-            fetch(`https://world.openfoodfacts.org/api/v2/search?code=${text}&fields=code,product_name,product_name_fr,image_front_small_url,allergens_from_ingredients,_keywords`)
-            .then(response=>response.json())
-            .then(response=>{
-                console.log("resp")
-                let product_name =  response.products[0].product_name || response.products[0].product_name_fr
-                let product_image = response.products[0].image_front_small_url
-                let allergies = response.products[0].allergens_from_ingredients.concat(",",response.products[0]._keywords)
+    useEffect(() => {
+        if (scanned === true) {
+            fetch(`https://world.openfoodfacts.org/api/v2/search?code=${text}&fields=code,product_name,product_name_fr,image_front_small_url,allergens_from_ingredients,_keywords,ingredients_text`)
+                .then(response => response.json())
+                .then(response => {
+                    console.log("resp")
+                    let product_name = response.products[0].product_name || response.products[0].product_name_fr
+                    let product_image = response.products[0].image_front_small_url
+                    let allergies = response.products[0].allergens_from_ingredients +response.products[0]._keywords+","+response.products[0].ingredients_text.split("\n")
 
-                // console.log("1",product_name)
-                // console.log("alle",allergies)
-                console.log("ingred",response.products[0]._keywords)
+                    console.log("keywords", response.products[0]._keywords)
+                    console.log("allergies2222", allergies)
+                    console.log("allergens produc", response.products[0].allergens_from_ingredients)
+                    console.log(response.products[0])
 
-                if(response.products.length === 0){
-                    return setProduct_name("Desole le produit n'existe pas actuellement")
-                }
-                else{
-                    (() => {
-                        setProduct_image(product_image);
-                        setProduct_name(product_name);
-                        setProduct_allergies(allergies);
-                        return;
-                      })();
-                }
-            })
-            .catch(error=>console.log("this",error))
+
+                    // console.log("1",product_name)
+                    // console.log("alle", allergies, "de type", typeof (allergies))
+                    // console.log("ingred", response.products[0]._keywords)
+
+                    if (response.products.length === 0) {
+                        return setProduct_name("Desole le produit n'existe pas actuellement")
+                    }
+                    else {
+                        (() => {
+                            setProduct_image(product_image);
+                            setProduct_name(product_name);
+                            setProduct_allergies(allergies);
+                            return;
+                        })();
+                    }
+                })
+                .catch(error => console.log("this", error))
         }
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         isAllergetic();
         // console.log(product_allergies)
         // console.log("type of userAllergies", userAllergies[1]["ingredients"])
     })
 
     //What happens when we scan the bar code
-    const handleBarCodeScanned = ({type, data}) => {
+    const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
         setText(data);
-    //     console.log(`type: ${type} 
-    //                 Data: ${data}
-    //                 product_name: ${product_name}`)
+        //     console.log(`type: ${type} 
+        //                 Data: ${data}
+        //                 product_name: ${product_name}`)
     }
 
     //Check for permissions and return the screens
-    if(hasPermission===null){
-        return(
+    if (hasPermission === null) {
+        return (
             <View style={styles.container}>
                 <Text>Requesting for camera permission</Text>
             </View>
         );
     }
 
-    if(hasPermission===false){
+    if (hasPermission === false) {
         return (
             <View style={styles.container}>
-                <Text style={{margin:10}}>No access to camera </Text>
-                <Button title={'Allow camera'} onPress={()=>askForCameraPermission()}/>
+                <Text style={{ margin: 10 }}>No access to camera </Text>
+                <Button title={'Allow camera'} onPress={() => askForCameraPermission()} />
             </View>
         )
     }
 
     //return view
-    return(
+    return (
         <View style={styles.container}>
             <View style={styles.navBar}>
-                <NavBar/>
+                <NavBar />
             </View>
-            
+
             <View style={styles.barcodebox}>
                 <BarCodeScanner
-                showMarker={true}
-                torchMode={'on'}
-                onBarCodeScanned={scanned?undefined:handleBarCodeScanned}
-                style={{height:600, width:400}}
-                />   
+                    showMarker={true}
+                    torchMode={'on'}
+                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                    style={{ height: 600, width: 400 }}
+                />
             </View>
 
-            {!scanned&&<Text style={styles.maintext}>Please scan your product</Text>}
+            {!scanned && <Text style={styles.maintext}>Please scan your product</Text>}
             {/* <Text style={styles.maintext}>{text}</Text> */}
-            {scanned&&<Text style={styles.product_name}>{product_name}</Text>}
-           
-           {/* <Text>{allergy}</Text> */}
+            {scanned && <Text style={styles.product_name}>{product_name}</Text>}
+
+            {/* <Text>{allergy}</Text> */}
             <View style={styles.warning}>
                 {scanned && isDanger && <AntDesign name="warning" size={28} color="tomato" />}
-                {scanned && <Text style={styles.dangerous}> {dangerous} </Text>}    
+                {scanned && <Text style={styles.dangerous}> {dangerous} </Text>}
             </View>
 
-            
-            {scanned && <Text>{commonIngred}</Text>}
 
-            {scanned && <Button title={'scan again?'} onPress={() => setScanned(false)} color='tomato' />}
-            <SideBar/>
-            
+            {scanned && <Text>{commonIngred}</Text>}
+            <View style={styles.button}>
+                {scanned && <Button title={'scan again?'} onPress={clearData} color='tomato' />}
+            </View>
+            <SideBar navigation={navigation} />
+
             {/* <Image
                 source={{uri: product_image}}
                 style={styles.imageBox}
@@ -205,25 +216,25 @@ export default function BarScannerComponent({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
-        backgroundColor:'#FFF8E7',
-        alignItems:'center',
-        justifyContent:'center',
+        flex: 1,
+        backgroundColor: '#FFF8E7',
+        alignItems: 'center',
+        justifyContent: 'center',
         // paddingTop: StatusBar.currentHeight,
     },
-    warning:{
-        flexDirection: 'row' ,
-        margin:20,
+    warning: {
+        flexDirection: 'row',
+        margin: 20,
     },
-    dangerous:{
-        fontSize:16
+    dangerous: {
+        fontSize: 16
     },
     navBar: {
-        position:"absolute",
+        position: "absolute",
         top: 31,
         width: "100%"
     },
-    barcodebox:{
+    barcodebox: {
         // position: 'absolute',
         // top:100,
         backgroundColor: '#fff',
@@ -233,30 +244,30 @@ const styles = StyleSheet.create({
         width: 340,
         overflow: 'hidden',
         borderRadius: 20,
-        marginTop:0
+        marginTop: 0
     },
-    maintext:{
-        fontSize:16,
-        margin:20,
+    maintext: {
+        fontSize: 16,
+        margin: 20,
         fontWeight: 'bold'
     },
-    product_name:{
-        fontSize:18,
-        margin:20,
+    product_name: {
+        fontSize: 18,
+        margin: 20,
         fontWeight: 'bold',
 
 
     },
-    imageBox:{
-        width:200,
-        height:100,
-        resizeMode:"contain",
-        borderWidth:1,
-        overflow:'hidden'
+    imageBox: {
+        width: 200,
+        height: 100,
+        resizeMode: "contain",
+        borderWidth: 1,
+        overflow: 'hidden'
     },
-    button:{
-        flex:1,
-        position:"absolute",
-        bottom:10,
+    button: {
+        flex: 1,
+        position: "absolute",
+        bottom: 150,
     }
 });

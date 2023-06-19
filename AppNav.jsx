@@ -10,11 +10,14 @@ import TextRecognitionOcr from './pages/IngredScan';
 import { AuthContext, AuthProvider } from './context/authContext';
 import { View ,ActivityIndicator} from 'react-native';
 import { useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Settings from './pages/Settings';
 
 
 const Stack = createNativeStackNavigator();
 export default function AppNav() {
     const {loading,userToken} = useContext(AuthContext);
+   
     if (loading){
       return(
       <View style={{justifyContent:'center',alignItems:"center",flex:1}}> 
@@ -23,7 +26,7 @@ export default function AppNav() {
       </View>
       )
     }
-    console.log(userToken)
+    console.log("nav app",userToken)
     if (userToken===null) {
       return(
         <NavigationContainer>
@@ -48,8 +51,11 @@ export default function AppNav() {
         options={{headerShown:false}}/>
         <Stack.Screen name="BarcodeScan" component={BarScannerComponent}
         options={{headerShown:false}}/>
-        <Stack.Screen name="IngredScan" component={TextRecognitionOcr}
+        <Stack.Screen name="Settings" component={Settings}
         options={{headerShown:false}}/>
+        <Stack.Screen name="Scan Ingredients" component={TextRecognitionOcr}
+          options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}
+        />
         <Stack.Screen name="Allergies" component={Allergies1} 
         options={{headerStyle:{backgroundColor:"rgba(255, 189, 89, 0.73)"}}}/>
         <Stack.Screen name="Addallergie" component={AddAllergy} 
