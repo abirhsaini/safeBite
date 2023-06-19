@@ -1,0 +1,7 @@
+
+C:\Users\pc\Desktop\inpt\jenkins\workspace\medibook\server\functions>npm install 
+
+up to date in 32s
+
+239 packages are looking for funding
+  run `npm fund` for details
