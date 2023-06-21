@@ -32,6 +32,8 @@
         },
         "extra": {
             "eas": {
+                "skipInstallation": true,
+
                 "appId": "com.example.app",
                 "projectId": "6fe425ad-6a79-40cb-837e-bcfd8da8ec4e"
             }
