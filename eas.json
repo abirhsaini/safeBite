@@ -5,7 +5,7 @@
     "build": {
         "preview": {
             "android": {
-                "appId": "com.example.app",
+
                 "buildType": "apk"
             }
         }
